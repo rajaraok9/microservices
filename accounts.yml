@@ -1,0 +1,8 @@
+build:
+  platform: "2.0"
+accounts:
+  message: "Welcome to the Accounts web"
+  contactDetails:
+    name: "sabja"
+    phone: "293848929"
+    email: "sabja@gmail.com"
