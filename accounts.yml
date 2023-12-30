@@ -1,7 +1,7 @@
 build:
   platform: "2.0"
 accounts:
-  message: "Welcome to the Accounts web"
+  message: "Welcome to the Accounts website"
   contactDetails:
     name: "sabja"
     phone: "293848929"
