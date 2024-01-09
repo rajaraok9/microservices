@@ -1,0 +1,63 @@
+
+services:
+  rabbit:
+    image: rabbitmq:3.12-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 60s
+      retries: 10
+      start_period: 30s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  configserver:
+    image: "rkaveliga/configserver:s1"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    depends_on:
+      - rabbit
+    healthcheck:
+      #command: bash -c 'while [[ "$$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' uds-mock-server:4000/readiness)" != "200" ]]; do echo ..; sleep 5; done; echo backend is up;npm start'
+     # test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      test: ["CMD","curl","-f","http://configserver:8071/actuator/health/readiness"]
+      interval: 10s
+      timeout: 60s
+      retries: 10
+
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  accounts:
+    image: "rkaveliga/accounts:s1"
+    container_name: accounts-ms
+    ports:
+      - "8072:8072"
+    environment:
+      SPRING_APPLICATION_NAME: "accounts"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  loans:
+    image: "rkaveliga/loans:s1"
+    container_name: loans-ms
+    ports:
+      - "8073:8073"
+    environment:
+      SPRING_APPLICATION_NAME: "loans"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+
+networks:
+  eazybank:
+    driver: "bridge"
