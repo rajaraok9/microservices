@@ -1,5 +1,6 @@
 build:
   platform: "2.0"
+  version: "3.0"
 accounts:
   message: "Welcome to the Accounts website"
   contactDetails:
