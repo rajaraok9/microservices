@@ -6,11 +6,4 @@ accounts:
     name: "sabja"
     phone: "293848929"
     email: "sabja@gmail.com"
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchregistry: true
-    registerWithEureka: true
-  serviceUrl:
-    defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
