@@ -18,3 +18,11 @@ spring:
     name: insurance_ms
   profiles:
     active: "default"
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchregistry: true
+    registerWithEureka: true
+  serviceUrl:
+    defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
