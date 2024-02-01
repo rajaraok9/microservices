@@ -6,7 +6,7 @@ spring:
   config :
     import : "optional:configserver:http://localhost:8071/"
   application:
-    name: DEPARTMENT-SERVICE
+    name: DEPARTMENT
   profiles:
     active: "default"
   datasource:
